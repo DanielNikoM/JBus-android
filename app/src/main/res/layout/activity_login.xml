@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:alpha="10"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".LoginActivity"> <!-- Add this line -->
+    <!-- Fill the linear layout with some components-->
+
+    <TextView
+        android:id="@+id/NetLab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="🗿Netlab🗿"
+        android:textColor="@color/black"
+        android:textSize="48sp" />
+
+    <TextView
+        android:id="@+id/Quotes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="'if you cannot do great things,\ndo small things in a great way'"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/Email"
+        android:layout_width="272dp"
+        android:layout_height="71dp"
+        android:ems="10"
+        android:hint="Enter Email"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/Password"
+        android:layout_width="274dp"
+        android:layout_height="68dp"
+        android:ems="10"
+        android:hint="Enter Password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/Login"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3692C3"
+        android:text="Login"
+        app:iconTint="#000000" />
+
+    <TextView
+        android:id="@+id/account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Don't have an account ?" />
+
+    <TextView
+        android:id="@+id/RegisterNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Register Now"
+        android:textStyle="bold"/>
+
+</LinearLayout>
