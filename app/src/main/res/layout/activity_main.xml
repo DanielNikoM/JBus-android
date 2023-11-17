@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:gravity="center"
+    android:orientation="vertical"> <!-- Add this line -->
+    <!-- Fill the linear layout with some components-->
+
+    <TextView
+        android:id="@+id/Welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
+</LinearLayout>
