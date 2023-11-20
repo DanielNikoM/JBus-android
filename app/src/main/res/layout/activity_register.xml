@@ -26,7 +26,7 @@
         android:text="Input username, email, and password" />
 
     <EditText
-        android:id="@+id/editTextText"
+        android:id="@+id/RegUsername"
         android:layout_width="371dp"
         android:layout_height="73dp"
         android:ems="10"
@@ -34,7 +34,7 @@
         android:inputType="text" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/RegEmail"
         android:layout_width="368dp"
         android:layout_height="70dp"
         android:ems="10"
@@ -42,7 +42,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/RegPassword"
         android:layout_width="370dp"
         android:layout_height="72dp"
         android:ems="10"
@@ -50,7 +50,7 @@
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/Login"
+        android:id="@+id/RegisterButton"
         android:layout_width="279dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#3692C3"
