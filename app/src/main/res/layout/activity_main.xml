@@ -21,7 +21,7 @@
 
     <ListView
         android:id="@+id/list"
-        android:layout_width="match_parent"
+        android:layout_width="374dp"
         android:layout_height="600dp"
         tools:context=".MainActivity" />
 

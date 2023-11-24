@@ -55,5 +55,5 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#3692C3"
         android:text="Register"
-        app:iconTint="#000000"  />
+        app:iconTint="#000000" />
 </LinearLayout>

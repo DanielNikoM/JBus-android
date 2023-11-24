@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        // Tanggapan terhadap item menu yang dipilih
+
         if (id == R.id.person_button) {
-            // Tambahkan kode untuk menangani item menu "Settings" di sini
+
             Intent intent = new Intent(this, AboutMeActivity.class);
             startActivity(intent);
             return true;
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             btns[i].setBackgroundColor(getResources().getColor(android.R.color.transparent));
             btns[i].setText(""+(i+1));
             btns[i].setTextColor(getResources().getColor(R.color.black));
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(100, 100);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(150, 150);
             ll.addView(btns[i], lp);
             final int j = i;
             btns[j].setOnClickListener(v -> {
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i< noOfPages; i++) {
             if (i == index) {
                 btns[index].setBackgroundDrawable(getResources().getDrawable(R.drawable.circle));
-                btns[i].setTextColor(getResources().getColor(android.R.color.holo_blue_bright));
+                btns[i].setTextColor(getResources().getColor(android.R.color.white));
                 scrollToItem(btns[index]);
                 viewPaginatedList(listBus, currentPage);
             } else {
