@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity"
+    android:gravity="center"
+    android:orientation="vertical"> <!-- Add this line -->
+    <!-- Fill the linear layout with some components-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/black">
+
+        <TextView
+            android:id="@+id/Welcome"
+            android:layout_width="318dp"
+            android:layout_height="91dp"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="Manage Bus"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/plus"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_weight="3"
+            android:maxHeight="30sp"
+            app:srcCompat="@drawable/baseline_add_circle_outline_24" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="374dp"
+        android:layout_height="564dp"
+        tools:context=".MainActivity" />
+
+    <LinearLayout
+        android:id="@+id/pagination_footer"
+        android:layout_width="match_parent"
+        android:layout_height="66dp"
+        android:layout_marginVertical="21dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingHorizontal="21dp">
+
+        <Button
+            android:id="@+id/prev_page"
+            android:layout_width="56dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/baseline_arrow_back_ios_24"
+            android:minHeight="0dp" />
+
+        <HorizontalScrollView
+            android:id="@+id/page_number_scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:paddingHorizontal="18dp">
+
+            <LinearLayout
+                android:id="@+id/btn_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <Button
+            android:id="@+id/next_page"
+            android:layout_width="56dp"
+            android:layout_height="66dp"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/baseline_arrow_forward_ios_24"
+            android:minHeight="0dp" />
+    </LinearLayout>
+
+</LinearLayout>

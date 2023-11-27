@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        numbersArrayAdapter = new BusArrayAdaptor(this, Bus.sampleBusList(20));
+        numbersArrayAdapter = new BusArrayAdaptor(this, Bus.sampleBusList(20),0);
 
         numbersListView = findViewById(R.id.list);
 

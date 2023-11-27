@@ -117,6 +117,54 @@
             app:iconTint="#000000" />
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/NoCompany"
+        android:layout_width="376dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <TextView
+        android:id="@+id/TEXT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="You're not registered as a renter" />
+
+        <TextView
+            android:id="@+id/UnRegistered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Register Your Company"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/HaveCompany"
+        android:layout_width="376dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:id="@+id/Registered"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="You're already registered as a renter" />
+
+        <Button
+            android:id="@+id/ManageBus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#3692C3"
+            android:text="Manage Bus"
+            app:iconTint="#000000" />
+
+    </LinearLayout>
 
 
 </LinearLayout>

@@ -15,10 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BusArrayAdaptor extends ArrayAdapter<Bus> {
+    private int currentViewType;
 
     // invoke the suitable constructor of the ArrayAdapter class
-    public BusArrayAdaptor(@NonNull Context context, List<Bus> arrayList) {
+    public BusArrayAdaptor(@NonNull Context context, List<Bus> arrayList, int viewType) {
         super(context, 0, arrayList);
+        currentViewType = viewType;
     }
 
     @NonNull
@@ -30,7 +32,11 @@ public class BusArrayAdaptor extends ArrayAdapter<Bus> {
 
         // of the recyclable view is null then inflate the custom layout for the same
         if (currentItemView == null) {
-            currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.bus_view, parent, false);
+            if (currentViewType == 0) {
+                currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.bus_view, parent, false);
+            } else {
+                currentItemView = LayoutInflater.from(getContext()).inflate(R.layout.list_view, parent, false);
+            }
         }
 
         // get the position of the view from the ArrayAdapter

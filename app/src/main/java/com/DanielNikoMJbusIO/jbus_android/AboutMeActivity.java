@@ -12,12 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.DanielNikoMJbusIO.jbus_android.model.Account;
 import com.DanielNikoMJbusIO.jbus_android.model.BaseResponse;
 import com.DanielNikoMJbusIO.jbus_android.request.BaseApiService;
+import com.DanielNikoMJbusIO.jbus_android.request.UtilsApi;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,26 +33,49 @@ public class AboutMeActivity extends AppCompatActivity {
     private TextView balance;
     private EditText Amount;
     private Button TopUpButton = null;
+    private TextView regist;
+    private Button Manage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_me);
 
-
+        mApiService = UtilsApi.getApiService();
         Uname = findViewById(R.id.username);
         email = findViewById(R.id.emailIn);
         balance = findViewById(R.id.balance);
         Amount = findViewById(R.id.TopUpAmount);
+        regist = findViewById(R.id.UnRegistered);
+        Manage = findViewById(R.id.ManageBus);
 
+        LinearLayout Renter = (LinearLayout)findViewById(R.id.HaveCompany);
+        LinearLayout NotRenter = (LinearLayout)findViewById(R.id.NoCompany);
 
+        regist.setOnClickListener(v -> {moveActivity(this, RegisterRenterActivity.class);});
+
+        mContext = this;
         Uname.setText(loggedAccount.name);
         email.setText(loggedAccount.email);
         balance.setText(String.valueOf(loggedAccount.balance));
+        Manage.setOnClickListener(v -> {moveActivity(mContext, ManageBusActivity.class);});
 
 
         TopUpButton = findViewById(R.id.TopUp);
         TopUpButton.setOnClickListener(V->handleTopUp());
+
+        if (loggedAccount.company == null){
+            Renter.setVisibility(View.INVISIBLE);
+            NotRenter.setVisibility(View.VISIBLE);
+        }
+        else {
+            Renter.setVisibility(View.VISIBLE);
+            NotRenter.setVisibility(View.INVISIBLE);
+        }
+    }
+    private void moveActivity(Context ctx, Class<?> cls){
+        Intent intent = new Intent(ctx, cls);
+        startActivity(intent);
     }
 
     protected void handleTopUp() {
@@ -60,8 +85,9 @@ public class AboutMeActivity extends AppCompatActivity {
             Toast.makeText(mContext, "Field cannot be empty", Toast.LENGTH_SHORT).show();
             return;
         }
-        double topUpD = Double.valueOf(balanceS);
-        mApiService.topUp(loggedAccount.id, topUpD).enqueue(new Callback<BaseResponse<Double>>() {
+        double topUpAmount = Double.valueOf(balanceS);
+
+        mApiService.topUp(loggedAccount.id, topUpAmount).enqueue(new Callback<BaseResponse<Double>>() {
             @Override
             public void onResponse(Call<BaseResponse<Double>> call, Response<BaseResponse<Double>> response) {
                 // handle the potential 4xx & 5xx error
@@ -73,13 +99,14 @@ public class AboutMeActivity extends AppCompatActivity {
                 BaseResponse<Double> res = response.body();
                 if (res.success) {
                     finish();
-                    loggedAccount.balance += res.payload;
+                    LoginActivity.loggedAccount.balance += res.payload;
                     startActivity(getIntent());
                     Toast.makeText(mContext, "Berhasil Top Up", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Toast.makeText(mContext, "Gagal Top Up", Toast.LENGTH_SHORT).show();
                 }
+
             }
             @Override
             public void onFailure(Call<BaseResponse<Double>> call, Throwable t) {
@@ -87,4 +114,5 @@ public class AboutMeActivity extends AppCompatActivity {
             }
         });
     }
+
 }
