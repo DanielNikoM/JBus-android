@@ -7,6 +7,7 @@
     android:alpha="10"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@drawable/PixelWallpaper"
     tools:context=".LoginActivity"> <!-- Add this line -->
     <!-- Fill the linear layout with some components-->
 
@@ -16,6 +17,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="🗿Netlab🗿"
+        android:background="@color/white"
+        android:alpha=".7"
         android:textColor="@color/black"
         android:textSize="48sp" />
 

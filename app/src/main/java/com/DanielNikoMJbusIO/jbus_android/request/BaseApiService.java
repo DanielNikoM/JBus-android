@@ -2,6 +2,8 @@ package com.DanielNikoMJbusIO.jbus_android.request;
 import com.DanielNikoMJbusIO.jbus_android.model.Account;
 import com.DanielNikoMJbusIO.jbus_android.model.BaseResponse;
 import com.DanielNikoMJbusIO.jbus_android.model.Bus;
+import com.DanielNikoMJbusIO.jbus_android.model.BusType;
+import com.DanielNikoMJbusIO.jbus_android.model.Facility;
 import com.DanielNikoMJbusIO.jbus_android.model.Renter;
 import com.DanielNikoMJbusIO.jbus_android.model.Station;
 
@@ -43,7 +45,7 @@ public interface BaseApiService {
             @Query("phoneNumber") String phoneNumber
     );
 
-    @GET("account/getMyBus")
+    @GET("bus/getMyBus")
     Call<BaseResponse<List<Bus>>> getMyBus (
             @Query("accountId") int accountId
     );
@@ -51,11 +53,24 @@ public interface BaseApiService {
     @GET("station/getAll")
     Call<List<Station>> getAllStation();
 
-    /*@POST("account/create)
-    Call<BaseResponse<Bus>> create (
-            @Query("id") int id,
-            @Query("companyName") String companyName,
-            @Query("address") String address,
-            @Query("phoneNumber") String phoneNumber
-    );*/
+    @POST("bus/create")
+    Call<BaseResponse<Bus>> addBus(
+            @Query("accountId") int accountId,
+            @Query("name") String name,
+            @Query("capacity") int capacity,
+            @Query("facilities") List<Facility> facilities,
+            @Query("busType") BusType busType,
+            @Query("price") int price,
+            @Query("stationDepartureId") int stationDepartureId,
+            @Query("stationArrivalId") int stationArrivalId
+    );
+
+    @POST("bus/addSchedule")
+    Call<BaseResponse<Bus>> addSchedule(
+            @Query("busId") int busId,
+            @Query("time") String time
+    );
+
+    @GET("bus/{id}")
+    Call<Bus> getBusbyId(@Path("id") int busId);
 }

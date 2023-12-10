@@ -11,12 +11,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.DanielNikoMJbusIO.jbus_android.model.Account;
 import com.DanielNikoMJbusIO.jbus_android.model.BaseResponse;
+import com.DanielNikoMJbusIO.jbus_android.model.Bus;
 import com.DanielNikoMJbusIO.jbus_android.model.BusType;
 import com.DanielNikoMJbusIO.jbus_android.model.Facility;
 import com.DanielNikoMJbusIO.jbus_android.model.Station;
@@ -44,7 +46,8 @@ public class AddBusActivity extends AppCompatActivity {
 
     private CheckBox acCheckBox, wifiCheckBox, toiletCheckBox, lcdCheckBox;
     private CheckBox coolboxCheckBox, lunchCheckBox, baggageCheckBox, electricCheckBox;
-    private Button submitButton;
+    private Button AddButton;
+    private EditText BusName, Capacity, Price;
     private List<Facility> selectedFacilities = new ArrayList<>();
 
     @Override
@@ -60,19 +63,11 @@ public class AddBusActivity extends AppCompatActivity {
         baggageCheckBox = findViewById(R.id.BAGGAGE);
         electricCheckBox = findViewById(R.id.ELEC);
 
-        submitButton = findViewById(R.id.ADD);
+        BusName = findViewById(R.id.busName);
+        Capacity = findViewById(R.id.capacity);
+        Price = findViewById(R.id.price);
 
-
-        selectedFacilities.clear(); // Clear the list before updating
-        if (acCheckBox.isChecked()) { selectedFacilities.add(Facility.AC);}
-        if (wifiCheckBox.isChecked()) { selectedFacilities.add(Facility.WIFI);}
-        if (toiletCheckBox.isChecked()) { selectedFacilities.add(Facility.TOILET);}
-        if (lcdCheckBox.isChecked()) { selectedFacilities.add(Facility.LCD_TV);}
-        if (coolboxCheckBox.isChecked()) { selectedFacilities.add(Facility.COOL_BOX);}
-        if (lunchCheckBox.isChecked()) { selectedFacilities.add(Facility.LUNCH);}
-        if (baggageCheckBox.isChecked()) { selectedFacilities.add(Facility.LARGE_BAGGAGE);}
-        if (electricCheckBox.isChecked()) { selectedFacilities.add(Facility.ELECTRIC_SOCKET);}
-
+        AddButton = findViewById(R.id.ADD);
 
 
         busTypeSpinner = findViewById(R.id.bus_type_dropdown);
@@ -80,13 +75,13 @@ public class AddBusActivity extends AppCompatActivity {
         adBus.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
         busTypeSpinner.setAdapter(adBus);
 
-        // Initialize departureSpinner and arrivalSpinner
         departureSpinner = findViewById(R.id.departure_dropdown);
         arrivalSpinner = findViewById(R.id.arrival_dropdown);
 
         busTypeSpinner.setOnItemSelectedListener(busTypeOISL);
         mContext = this;
         mApiService = UtilsApi.getApiService();
+        AddButton.setOnClickListener(v->handleADD());
 
         mApiService.getAllStation().enqueue(new Callback<List<Station>>() {
             @Override
@@ -117,6 +112,34 @@ public class AddBusActivity extends AppCompatActivity {
             }
         });
     }
+    private void AddFacilities(){
+        selectedFacilities.clear();
+        if (acCheckBox.isChecked()) { selectedFacilities.add(Facility.AC);}
+        if (wifiCheckBox.isChecked()) { selectedFacilities.add(Facility.WIFI);}
+        if (toiletCheckBox.isChecked()) { selectedFacilities.add(Facility.TOILET);}
+        if (lcdCheckBox.isChecked()) { selectedFacilities.add(Facility.LCD_TV);}
+        if (coolboxCheckBox.isChecked()) { selectedFacilities.add(Facility.COOL_BOX);}
+        if (lunchCheckBox.isChecked()) { selectedFacilities.add(Facility.LUNCH);}
+        if (baggageCheckBox.isChecked()) { selectedFacilities.add(Facility.LARGE_BAGGAGE);}
+        if (electricCheckBox.isChecked()) { selectedFacilities.add(Facility.ELECTRIC_SOCKET);}
+    }
+
+    private boolean validateInput() {
+        AddFacilities();
+        if (BusName.getText().toString().isEmpty() ||
+                Capacity.getText().toString().isEmpty() ||
+                Price.getText().toString().isEmpty() ||
+                selectedFacilities.isEmpty()) {
+            Toast.makeText(mContext, "Field cannot be empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (selectedDeptStationID == selectedArrStationID) {
+            Toast.makeText(mContext, "Station cannot be same", Toast.LENGTH_SHORT).show();
+        }
+
+        return true;
+    }
 
     AdapterView.OnItemSelectedListener busTypeOISL = new AdapterView.OnItemSelectedListener() {
         @Override
@@ -133,7 +156,7 @@ public class AddBusActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
-            selectedBusType = busType[position];
+            selectedDeptStationID = stationList.get(position).id;
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
@@ -144,45 +167,34 @@ public class AddBusActivity extends AppCompatActivity {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             ((TextView) parent.getChildAt(0)).setTextColor(Color.BLACK);
-            selectedBusType = busType[position];
+            selectedArrStationID = stationList.get(position).id;
         }
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
         }
     };
 
-    /*protected void handleADD() {
-// handling empty field
-        String emailS = email.getText().toString();
-        String passwordS = password.getText().toString();
-        if (emailS.isEmpty() || passwordS.isEmpty()) {
-            Toast.makeText(mContext, "Field cannot be empty", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        mApiService.Login(emailS, passwordS).enqueue(new Callback<BaseResponse<Account>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<Account>> call, Response<BaseResponse<Account>> response) {
-                // handle the potential 4xx & 5xx error
-                if (!response.isSuccessful()) {
-                    Toast.makeText(mContext, "Email does not exist" + response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
+    protected void handleADD() {
+        if (!validateInput()) return;
 
-                BaseResponse<Account> res = response.body();
+        String busName = BusName.getText().toString();
+        int seatCapacity = Integer.parseInt(Capacity.getText().toString());
+        int price = Integer.parseInt(Price.getText().toString());
 
-                if (res.success) {
-                    finish();
-                    Toast.makeText(mContext, "Welcome", Toast.LENGTH_SHORT).show();
-                    loggedAccount = res.payload;
-                    moveActivity(mContext, MainActivity.class);
-                }
-                else{
-                    Toast.makeText(mContext, "Email does not exist" + response.code(), Toast.LENGTH_SHORT).show();
-                }
-            }
+        mApiService.addBus(LoginActivity.loggedAccount.id, busName, seatCapacity, selectedFacilities, selectedBusType, price, selectedDeptStationID, selectedArrStationID).enqueue(new Callback<BaseResponse<Bus>>() {
             @Override
-            public void onFailure(Call<BaseResponse<Account>> call, Throwable t) {
-                Toast.makeText(mContext, "Problem with the server", Toast.LENGTH_SHORT).show();
+            public void onResponse(Call<BaseResponse<Bus>> call, Response<BaseResponse<Bus>> response) {
+                if (!response.isSuccessful()) return;
+
+                BaseResponse<Bus> res = response.body();
+                Toast.makeText(mContext, res.message, Toast.LENGTH_SHORT).show();
+                mContext.startActivity(new Intent(mContext, ManageBusActivity.class));
             }
-        });*/
+
+            @Override
+            public void onFailure(Call<BaseResponse<Bus>> call, Throwable t) {
+
+            }
+        });
+    }
 }
